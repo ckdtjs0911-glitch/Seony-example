@@ -218,7 +218,7 @@ function arrow(slide, x, y, w, h, opts = {}) {
   });
   s.addText([
     { text: "결론  ", options: { bold: true, color: GOLD } },
-    { text: "기준을 넘으면 추가 통제를 적용한다. 추가 통제가 실행 가능하지 않은 개별 위험은 이익-위험 분석(benefit-risk analysis, ISO 14971:2019 7.4항)으로 판단하고, 이익을 입증하지 못하면 허용 불가로 남긴다. 전체 잔여 위험은 8항에 따라 평가한다." },
+    { text: "기준을 넘으면 추가 통제를 적용한다. 추가 통제가 실행 가능하지 않은 개별 잔여 위험은 이익이 위험을 상회하는지 이익-위험 분석(benefit-risk analysis, ISO 14971:2019 7.4항)으로 판단하고, 입증하지 못하면 허용 불가로 판단한다. 전체 잔여 위험은 8항에 따라 평가한다." },
   ], { shape: pres.ShapeType.roundRect, rectRadius: 0.12, x: 0.5, y: 5.65, w: 12.33, h: 1.05, fill: { color: "FFFFFF" }, line: { color: SLATE, width: 1.5 }, fontSize: 14, color: TXT, valign: "middle", margin: [4, 14, 4, 14], isTextBox: true, objectName: "Conclusion" });
   s.addNotes(NOTES[4]);
 }
