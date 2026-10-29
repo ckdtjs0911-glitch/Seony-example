@@ -81,6 +81,8 @@
     body { background: #fff; }
     .page { margin: 0; box-shadow: none; max-width: none; padding: 0; }
     h2 { break-after: avoid; }
+    h2.new-page { break-before: page; margin-top: 0; }
+    hr { display: none; }
     table, figure { break-inside: avoid; }
     th, td.group, .callout { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
@@ -140,7 +142,7 @@
 
   <hr>
 
-  <h2>2. ISO 13485 심사 관련</h2>
+  <h2 class="new-page">2. ISO 13485 심사 관련</h2>
 
   <h3>2-1. 심사 주기</h3>
   <p>ISO 13485 인증의 유효기간은 3년이며, 유지하려면 매년 사후심사를 받고 3년마다 갱신심사를 받아야 한다.</p>
