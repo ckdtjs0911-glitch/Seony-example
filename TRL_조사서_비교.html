@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TRL 조사서 비교</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1f2328; --muted: #59636e; --line: #d1d9e0;
+    --head: #44546A; --head-fg: #ffffff; --accent: #B08600; --soft: #E5F4CE;
+    --new: #1a7f37; --warn-bg: #fff8e1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1117; --fg: #e6edf3; --muted: #9198a1; --line: #30363d;
+      --head: #2d3a4d; --soft: #1f2a17; --new: #3fb950; --warn-bg: #2b2412;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg);
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    line-height: 1.6; }
+  main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 1.6rem; margin: 0 0 4px; }
+  h1 + p { color: var(--muted); margin-top: 0; }
+  h2 { font-size: 1.15rem; margin: 36px 0 12px; padding-bottom: 6px;
+    border-bottom: 3px solid var(--accent); display: inline-block; }
+  .summary { background: var(--soft); border-radius: 10px; padding: 14px 18px; }
+  .summary p { margin: 0 0 6px; }
+  .summary ol { margin: 0; }
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+  th, td { border: 1px solid var(--line); padding: 8px 10px; vertical-align: top; text-align: left; }
+  th { background: var(--head); color: var(--head-fg); font-weight: 600; }
+  td:first-child { text-align: center; width: 36px; }
+  .tag { display: inline-block; font-size: 0.78rem; font-weight: 700; color: var(--new);
+    border: 1px solid var(--new); border-radius: 4px; padding: 0 5px; margin-right: 4px; }
+  ul, ol { padding-left: 1.3rem; }
+  li { margin-bottom: 4px; }
+  .check li { background: var(--warn-bg); border-radius: 8px; padding: 8px 12px; margin-bottom: 8px; list-style-position: inside; }
+  .check { padding-left: 0; }
+  code { font-family: Consolas, monospace; background: var(--soft); padding: 1px 4px; border-radius: 4px; }
+  footer { margin-top: 40px; font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>TRL점프업 기술 수요 조사서 비교</h1>
+  <p>A <code>3.27...docx</code>(마지막 수정 2026-09-15, j.lee) → B <code>TRL...docx</code>(마지막 수정 2026-10-30, UI_창선, 12번째 수정본)</p>
+
+  <div class="summary">
+    <p><strong>요약</strong>: 두 문서의 서식과 구조는 같고, B에서 본문이 9군데 바뀌었다.</p>
+    <ol>
+      <li>CT 분할 목표 상향(0.90 → 0.94)과 TZ·PZ 세부 지표 추가</li>
+      <li>인허가 대응 항목(위험관리·사용적합성·SOUP·사이버보안·DGMP) 보강</li>
+      <li>외부검증 후보 기관과 통계 분석 방법 명시</li>
+      <li>구매의향서와 인허가 준비 현황·계획 추가</li>
+    </ol>
+  </div>
+
+  <h2>바뀌지 않은 부분</h2>
+  <ul>
+    <li>표의 행·열 구조와 기재 항목은 같음. 표 너비 지정만 B에서 빠짐</li>
+    <li>제안자 정보, NEXT·SEED 선택, 키워드, 개발기간·예산(33개월, 14.3억 원), TRL(현재 3 → 목표 7), 특허 정보, 판로, 시장 수치는 같음</li>
+    <li>별첨 1의 그림은 같은 이미지이며 표시 크기와 가로세로 비율만 바뀜(6.63×8.59 in → 5.43×7.50 in)</li>
+  </ul>
+
+  <h2>바뀐 부분 (A → B)</h2>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>#</th><th>위치</th><th>A</th><th>B</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>핵심기술요소, 핵심기술1 달성 지표</td><td>DSC CT ≥0.90 / MRI ≥0.94</td><td>DSC CT <strong>≥0.94</strong>(이행대(TZ)·말초대(PZ) 각 DSC ≥0.85) / MRI ≥0.94</td></tr>
+      <tr><td>2</td><td>개발목표, 핵심 성능지표(분할 DSC)</td><td>CT ≥0.90, MRI ≥0.94</td><td>CT <strong>≥0.94</strong>(TZ·PZ 각 ≥0.85), MRI ≥0.94</td></tr>
+      <tr><td>3</td><td>목표 TRL 7, 핵심기술1</td><td>DSC CT ≥0.90 / MRI ≥0.94</td><td>DSC CT <strong>≥0.94</strong>(이행대(TZ)·말초대(PZ) 각 DSC ≥0.85) / MRI ≥0.94</td></tr>
+      <tr><td>4</td><td>단계별 개발 내용, 2단계 1차년도</td><td>IEC 62304·ISO 13485 설계관리까지</td><td><span class="tag">추가</span>ISO 14971 위험관리, IEC 62366-1 사용적합성 형성평가, SOUP(nnU-Net 등) 식별·위험평가·형상관리</td></tr>
+      <tr><td>5</td><td>단계별 개발 내용, 2단계 2차년도</td><td>확증 임상 프로토콜 수립 및 인허가 신청까지</td><td><span class="tag">추가</span>사용적합성 총괄평가, 사이버보안 자료 작성, 디지털의료기기 GMP(DGMP) 적합판정 심사 준비</td></tr>
+      <tr><td>6</td><td>검증 방법, 데이터</td><td>≥3기관</td><td>≥3기관에 외부검증 후보 추가: 분당서울대학교병원 등, 서울대학교병원·국립암센터와 데이터 공유 연구 진행 중</td></tr>
+      <tr><td>7</td><td>검증 방법, 통계 분석</td><td>없음</td><td><span class="tag">신설</span>동일 환자 대응 비교 시 AUROC는 DeLong 검정, 민감도·특이도는 McNemar 검정, 95% 신뢰구간은 부트스트랩(1,000회)</td></tr>
+      <tr><td>8</td><td>사업화 계획 ①, 수요처</td><td>세브란스체크업 MOU·태영소프트 업무협약</td><td><strong>구매의향서</strong> 추가</td></tr>
+      <tr><td>9</td><td>사업화 계획 ①, 인허가 준비</td><td>없음</td><td><span class="tag">신설</span>EVERTRI 인허가 컨설팅(2026.9 의료기기 신고 진행 완료, DGMP·M2 허가 진행 예정), 식약처 디지털의료기기 사전검토 신청(검토 중), Early Boost 사업 KRSC 규제지원 자문 요청</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>B에서 확인할 부분</h2>
+  <ol class="check">
+    <li><strong>CT DSC 목표의 근거</strong>: 목표는 CT ≥0.94로 올렸지만 같은 줄의 세계 최고 수준은 여전히 "CT 0.90(美 UTSW)"이다. 현재 실적 "단일기관 200례 DSC 0.85"도 CT인지 MRI인지 적혀 있지 않다. 실적의 영상 종류를 밝히고, CT 0.94와 TZ·PZ 0.85 목표의 근거를 덧붙이는 것이 좋다.</li>
+    <li><strong>인허가 준비 문장의 날짜</strong>: "2026.4~: DGMP 및 M2 허가 진행 예정"은 문서 수정일(2026.10)보다 앞선 시점인데 "예정"으로 적혀 있다. 연도를 잘못 쓴 것인지, 예전 계획을 고치지 않은 것인지 확인이 필요하다.</li>
+    <li><strong>"의료기기 신고"와 등급</strong>: 신고는 보통 1등급 대상이다. 2등급은 원칙적으로 인증, 3·4등급은 허가다. 신고한 제품과 등급, "M2"의 뜻을 밝혀야 본문의 2·3등급 인허가 계획과 헷갈리지 않는다.</li>
+    <li><strong>외부검증의 독립성</strong>: 서울대학교병원·국립암센터의 "데이터 공유 연구"가 학습용인지 외부시험용인지 불분명하다. 기존의 학습·시험 기관 분리 원칙과 맞는지 확인이 필요하다.</li>
+    <li><strong>서식·문장</strong>: <code>MRI ≥0.94/ CT</code> → <code>MRI ≥0.94 / CT</code>, <code>검토 중:M2</code> → <code>검토 중: M2</code>, 인허가 준비 문장 끝의 쉼표 <code>(2026.9),</code> 삭제</li>
+    <li><strong>선택 사항</strong>: 새로 인용한 규격에 발행연도를 적을지 검토한다. 예: ISO 14971:2019, IEC 62366-1:2015+AMD1:2020</li>
+  </ol>
+
+  <footer>Claude 작성 · Codex 검토 반영</footer>
+</main>
+</body>
+</html>
