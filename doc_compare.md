@@ -38,3 +38,23 @@
 - 예시문은 우리 문서의 문체(본문 "~한다"체)에 맞춰 바로 붙여 넣을 수 있게 쓴다. 승인자처럼 정해지지 않은 값은 "○○"로 두고 메모에 적는다.
 - 비교 의견과 예시문은 `Codex_Review.md`의 Claude → Codex → Claude 검토를 거친다.
 - 검토 결과(반영한 것과 반영하지 않은 것)는 HTML에 넣지 않고 채팅 답변에 적는다.
+
+## 4. 결과물과 만드는 방법
+
+비교를 마치면 결과물 두 개를 사용자에게 준다.
+
+1. 비교 HTML (1~3절 형식)
+2. 우리 문서(docx)에 추가·수정 위치를 표시한 사본: 원본 문단은 그대로 두고, 해당 위치 바로 뒤에 `[추가]`(파랑) 또는 `[수정 제안]`(빨강) 문단을 넣는다.
+
+도구는 `tools/doc_compare/`에 있다. 예시는 `tools/doc_compare/examples/`의 QP-704 비교이고, 결과 예시는 `samples/doc-compare/QP-704_vs_reference.html`이다.
+
+| 단계 | 도구 | 비고 |
+|---|---|---|
+| 우리 문서 문단·쪽 번호 추출 | `dump_docx_blocks.py 원본.docx 원본.pdf 결과.json` | PDF는 LibreOffice로 미리 변환해 둠. `pdfinfo`·`pdftotext` 필요. 쪽 번호는 변환 PDF 기준 추정값 |
+| 참고본(hwp) 본문·표 추출 | pyhwp의 `hwp5txt`, `hwp5proc xml` | 확인한 환경에서는 HWP 5.0 파일이 LibreOffice로 열리지 않았음 |
+| 비교 HTML 생성 | `tools/doc_compare/examples/build_QP-704_compare.py`를 복사해 수정 | 절별 내용(sections) 외에 제목, 쪽수, 블록 번호도 QP-704에 맞춰져 있으므로 함께 바꿈. 스타일은 샘플 HTML에서 가져옴 |
+| docx 표시본 생성 | `mark_docx.py` + 표시 목록 JSON (`tools/doc_compare/examples/QP-704_marks.json` 형식) | 위치는 본문 문단의 앞부분 글자(공백 무시)로 찾고 첫 번째로 일치하는 문단을 씀. 표 안 문단은 찾지 않음. 찾지 못한 항목은 알려 줌 |
+
+pyhwp 설치 시 확인한 사항:
+- 시스템 Python에서는 설치가 실패하여 별도 가상환경(venv)에 설치하고 `six`, `lxml`을 함께 설치했다.
+- `hwp5odt`는 스키마 검사에서 멈출 수 있다. 본문·표 추출은 `hwp5txt`와 `hwp5proc xml`을 쓴다.
