@@ -55,9 +55,13 @@ def table_html(rows, marks=()):
 MODS = {}  # block_index -> (tag, short text): 수정할 위치 표시 (반드시 반영 / 반영 권장)
 
 
+def mod_box(tag, text):
+    return f'<p class="mod-mark"><span class="tag {tag}">{TAG[tag]}</span> {text} (→ 비교 의견)</p>'
+
+
 def mod_mark(i):
     tag, text = MODS[i]
-    return f'<p class="mod-mark"><span class="tag {tag}">{TAG[tag]}</span> {text} (→ 비교 의견)</p>'
+    return mod_box(tag, text)
 
 
 def a_html(lo, hi, extra=None):
@@ -175,23 +179,25 @@ sec("r3", "3. 적용범위", "양쪽", pages(4, 5),
 # ---- definitions table
 def def_rows():
     r = []
-    def row(a_title, a_body, a_pg, b_title, b_body, nt):
-        ac = (f'<span class="pg706 first">p.{a_pg}</span><div class="dt">{esc(a_title)}</div>{esc(a_body)}' if a_title
-              else '<p class="empty">— 해당 내용 없음 —</p>')
+    def row(a_title, a_body, a_pg, b_title, b_body, nt, mark=""):
+        ac = (f'<span class="pg706 first">p.{a_pg}</span><div class="dt">{esc(a_title)}</div>{esc(a_body)}{mark}' if a_title
+              else f'<p class="empty">— 해당 내용 없음 —</p>{mark}')
         bc = (f'<div class="dt">{b_title}</div>{b_body}' if b_title else '<p class="empty">— 해당 내용 없음 —</p>')
         r.append(f"<tr><td>{ac}</td><td>{bc}</td><td>{nt}</td></tr>")
     T = lambda i: A[i]["text"]
     row(T(7), T(8), 2, "", "", note(["mid"], "번호 중복·오타 수정",
         ["3.1이 두 번 나옴 → 이 항목부터 3.1~3.10으로 다시 매김",
          "오타 \"소프트웨어사\"를 \"소프트웨어가\"로 수정함"],
-        ex="3.1 소프트웨어 설계 규격<br>소프트웨어가 어떤 기능을 어떻게 수행할 것인가를 설명한 것"))
+        ex="3.1 소프트웨어 설계 규격<br>소프트웨어가 어떤 기능을 어떻게 수행할 것인가를 설명한 것"),
+        mark=mod_box("mid", "3.1 번호 중복, 오타 \"소프트웨어사\""))
     for i, j in [(9, 10), (11, 12), (13, 14), (15, 16), (17, 18), (19, 20), (21, 22), (23, 24)]:
         row(T(i), T(j), 2, "", "", note(["ok"], "그대로 유지", ["번호 정리 후 하나씩 밀림"]))
     row(T(25), T(26), 2, "", "", note(["mid"], "정의 보강",
         ["\"목적에 적합한 아이템의 버전\"은 뜻이 분명하지 않음",
          "특정 목적으로 내놓는 형상 항목의 특정 버전이라는 뜻으로 고침"],
         ex="3.10 배포(Release)<br>특정 목적으로 사용할 수 있도록 제공되는 형상 항목의 특정 버전",
-        memo="IEC 62304의 release 정의를 참고한 문장임 [확인 필요: 규격 원문의 정의 문구]"))
+        memo="IEC 62304의 release 정의를 참고한 문장임 [확인 필요: 규격 원문의 정의 문구]"),
+        mark=mod_box("mid", "배포 정의 보강"))
     for lo, hi, title, tags, nt_title, bl in [
         (20, 21, "3.1 설계 및 개발 입력", ["na"], "추가 선택", ["설계 및 개발관리 절차서(UIT-QP-703)에 정의가 있으면 생략함"]),
         (22, 24, "3.2 설계 및 개발 출력", ["na"], "추가 선택", ["위와 같음"]),
@@ -200,11 +206,14 @@ def def_rows():
          ["704 본문에서 \"검증\"과 \"유효성 확인\"을 여러 번 쓰므로 두 용어를 정의함"]),
         (29, 30, "3.5 설계 및 개발 유효성 확인", ["mid"], "정의 추가 권장", ["위와 같음"]),
     ]:
+        ex = {"3.4": "3.11 설계 및 개발 검증(Verification)<br>설계 및 개발 출력이 설계 및 개발 입력 요구사항을 충족하는지 확인하는 활동",
+              "3.5": "3.12 설계 및 개발 유효성 확인(Validation)<br>의도된 사용자의 요구사항이 충족되는지를 입증하기 위하여 설계 및 개발을 평가하는 과정"}.get(title[:3])
         body = " ".join(l.strip() for l in B_LINES[lo - 1:hi] if l.strip())
         cls = "add" if tags == ["mid"] else None
         b_body = f'<span class="mk-add">{esc(body)}</span>' if cls else esc(body)
         b_title = f'<span class="mk-add">{esc(title)}</span>' if cls else esc(title)
-        row("", "", 0, b_title, b_body, note(tags, nt_title, bl))
+        mark = arrow(f"➜ [704 p.2] 추가: 용어 정의 끝(3.10 다음)에 {title[4:]} 정의 (오른쪽 예시문)") if cls else ""
+        row("", "", 0, b_title, b_body, note(tags, nt_title, bl, ex=ex), mark=mark)
     return ('<tr><td colspan="3" class="inner"><table class="def"><tr><th>UIT-QP-704</th><th>참고본</th><th>비교 의견</th></tr>'
             + "".join(r) + "</table></td></tr>")
 
