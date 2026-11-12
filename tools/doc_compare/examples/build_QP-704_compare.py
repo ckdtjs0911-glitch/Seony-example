@@ -52,6 +52,14 @@ def table_html(rows, marks=()):
     return h + "</table>"
 
 
+MODS = {}  # block_index -> (tag, short text): 수정할 위치 표시 (반드시 반영 / 반영 권장)
+
+
+def mod_mark(i):
+    tag, text = MODS[i]
+    return f'<p class="mod-mark"><span class="tag {tag}">{TAG[tag]}</span> {text} (→ 비교 의견)</p>'
+
+
 def a_html(lo, hi, extra=None):
     """Blocks lo..hi (inclusive) of QP-704 with page markers. extra: {block_index: html after it}"""
     h, page, first = "", None, True
@@ -65,6 +73,8 @@ def a_html(lo, hi, extra=None):
             h += f"<p>{esc(b['text'])}</p>"
         else:
             h += table_html(b["rows"])
+        if i in MODS:
+            h += mod_mark(i)
         if extra and i in extra:
             h += extra[i]
     return h
@@ -89,6 +99,27 @@ def pages(lo, hi):
 
 EMPTY = '<p class="empty">— 해당 내용 없음 —</p>'
 TAG = {"high": "수정·추가", "mid": "수정", "ok": "유지", "na": "선택"}
+MODS.update({
+    1: ("mid", "개정 일자·개정번호 정리"),
+    5: ("high", "적용 대상(독립형 소프트웨어) 명시"),
+    63: ("high", "PHASE-1 하드웨어 표현 정리"),
+    75: ("mid", "아키텍처 구성(모듈·외부 연동·SOUP)으로 수정"),
+    86: ("mid", "안전성 등급 정의 문장 수정"),
+    100: ("mid", "\"H/W E/S승인\" 등 장비 표현 정리"),
+    108: ("mid", "이력/버전 관리 시스템 조건 추가"),
+    112: ("mid", "\"설계 사양을\" → \"요구사항을\""),
+    139: ("mid", "(2) 번호 중복"),
+    153: ("mid", "추적성 연결 대상 구체화"),
+    157: ("mid", "\"양산용\" 표현 정리"),
+    174: ("mid", "45일 이내 보고서 시점 확인"),
+    177: ("high", "밸리데이션 보고서 작성·승인 주체 통일"),
+    197: ("high", "배포 승인자 정리, 최종 배포 조건 추가"),
+    211: ("high", "장비 운용파일 설명을 소프트웨어 제품에 맞게 수정"),
+    212: ("high", "파일 이름·버전 표기 체계 수정"),
+    225: ("high", "버전 체계와 올리는 기준"),
+    232: ("mid", "\"고객이 원하는 경우\" 범위 정리"),
+    249: ("mid", "양식 목록 보완, 번호 통일"),
+})
 
 
 def note(tags, title, bullets, ex=None, memo=None):
@@ -360,7 +391,7 @@ sec("r26", "26. 양식 및 기록", "양쪽", pages(248, 249),
 css = re.search(r"<style>(.*?)</style>", open(css_src, encoding="utf-8").read(), re.S).group(1)
 nav = "".join(f'<a href="#{sid}">{title}</a>' for sid, title, _ in rows)
 legend = ('<p class="legend"><span class="pg706" style="margin:0">p.N</span> 704 쪽(LibreOffice 변환 기준, 14쪽) &nbsp;'
-          '<span class="arrow-add" style="display:inline-block;margin:0">➜ 704 추가 위치</span> &nbsp;<b>참고본 표시</b> '
+          '<span class="arrow-add" style="display:inline-block;margin:0">➜ 704 추가 위치</span> &nbsp;<span class="mod-mark" style="display:inline-block;margin:0"><span class="tag high">수정·추가</span>/<span class="tag mid">수정</span> 704 수정 위치</span> &nbsp;<b>참고본 표시</b> '
           '(수정 항목의 비교 의견 칸에는 <b style="color:#b42318">예시문</b> 포함): <span class="mk-mod">빨강</span> = 704의 기존 내용을 이 문구 방향으로 수정 &nbsp; '
           '<span class="mk-add">파랑</span> = 704에 없어서 이 내용을 추가 &nbsp;|&nbsp; <span class="tag high">수정·추가</span> 반드시 반영 &nbsp; '
           '<span class="tag mid">수정</span> 반영 권장 &nbsp; <span class="tag ok">유지</span> 현행 유지 &nbsp; <span class="tag na">선택</span> 필요 시 반영 · '
@@ -370,7 +401,9 @@ page = f"""<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>UIT-QP-704 ↔ 참고본 전체 문서 대조</title>
-<style>{css}</style>
+<style>{css}
+.mod-mark{{color:#b42318;background:#fde8e4;border:1px dashed #b42318;border-radius:5px;padding:4px 9px;margin:6px 0;font-size:13px;font-weight:bold}}
+.mod-mark .tag{{margin:0 4px 0 0}}</style>
 </head>
 <body><div class="wrap">
 <h1>소프트웨어 관리 절차서 전체 문서 대조</h1>
