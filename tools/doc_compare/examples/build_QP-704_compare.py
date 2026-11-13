@@ -432,6 +432,16 @@ legend = ('<p class="legend"><span class="pg706" style="margin:0">p.N</span> 704
           '<span class="mk-add">파랑</span> = 704에 없어서 이 내용을 추가 &nbsp;|&nbsp; <span class="tag high">수정·추가</span> 반드시 반영 &nbsp; '
           '<span class="tag mid">수정</span> 반영 권장 &nbsp; <span class="tag ok">유지</span> 현행 유지 &nbsp; <span class="tag na">선택</span> 필요 시 반영 · '
           '704 원문은 docx에서, 참고본은 hwp에서 추출했어요. 참고본의 줄바꿈은 원문 그대로이고, 머리글은 표지 행에 넣었어요. 참고본의 &lt;그림&gt;은 hwp에서 그림을 뽑지 못한 자리예요.</p>')
+# 색 구분 고정 막대: 스크롤해도 화면 맨 위에 남는 범례 요약 (자세한 설명은 legend)
+cbar = ('<div class="cbar" id="cbar"><div class="cbar-in">'
+        '<b>704 칸</b><span class="it"><span class="cbox red">예시문 <span class="chg">바뀐 부분</span></span></span>'
+        '<span class="it"><span class="cbox blue">(추가된 내용: …)</span></span>'
+        '<span class="sep"></span><b>참고본</b><span class="it"><span class="mk-mod">빨강 = 수정</span></span><span class="it"><span class="mk-add">파랑 = 추가</span></span>'
+        '<span class="sep"></span><b>태그</b><span class="it"><span class="tag high">수정·추가</span> 반드시</span><span class="it"><span class="tag mid">수정</span> 권장</span>'
+        '<span class="it"><span class="tag ok">유지</span></span><span class="it"><span class="tag na">선택</span></span>'
+        '</div></div>')
+cbar_js = ("<script>(function(){var b=document.getElementById('cbar');function f(){document.documentElement.style.setProperty('--cbar',b.offsetHeight+'px')}"
+           "f();window.addEventListener('resize',f);window.addEventListener('load',f)})();</script>")
 page = f"""<!doctype html>
 <html lang="ko"><head>
 <meta charset="utf-8">
@@ -441,9 +451,20 @@ page = f"""<!doctype html>
 .ex-inline{{margin:6px 0 10px;padding:7px 10px;background:#fff;border:1px solid #f0c4be;border-left:3px solid #b42318;border-radius:4px;line-height:1.65}}
 .ex-inline .tag{{margin:0 4px 0 0}}
 .chg{{color:#b42318;font-weight:bold}}
-.add-inline{{margin:6px 0 10px;padding:7px 10px;color:#1d4ed8;background:#e3ecfd;border-left:3px solid #1d4ed8;border-radius:4px;line-height:1.65}}</style>
+.add-inline{{margin:6px 0 10px;padding:7px 10px;color:#1d4ed8;background:#e3ecfd;border-left:3px solid #1d4ed8;border-radius:4px;line-height:1.65}}
+.cbar{{position:sticky;top:0;z-index:20;background:#fff;border-bottom:2px solid #cfdcd5;box-shadow:0 2px 6px rgba(0,0,0,.06);padding:7px 16px;font-size:13px;line-height:1.5}}
+.cbar-in{{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center}}
+.cbar b{{color:#3d5246;font-size:12px;margin-right:-4px}}
+.cbar .sep{{width:1px;height:16px;background:#cfdcd5}}
+.cbar .it{{white-space:nowrap}} .cbar .tag{{margin:0 2px 0 0}}
+.cbox{{display:inline-block;padding:1px 7px;border-radius:4px;font-size:12px}}
+.cbox.red{{background:#fff;border:1px solid #f0c4be;border-left:3px solid #b42318}}
+.cbox.blue{{color:#1d4ed8;background:#e3ecfd;border-left:3px solid #1d4ed8}}
+thead th{{top:var(--cbar,0) !important}}
+[id]{{scroll-margin-top:calc(var(--cbar,48px) + 8px)}}
+@media (max-width:600px){{.cbar{{font-size:12px;padding:6px 10px}} .cbar .sep{{display:none}}}}</style>
 </head>
-<body><div class="wrap">
+<body>{cbar}<div class="wrap">
 <h1>소프트웨어 관리 절차서 전체 문서 대조</h1>
 <p class="sub">왼쪽: UIT-QP-704 소프트웨어 관리 (Rev.1 개정 중, docx · 14쪽) · 가운데: 참고본 소프트웨어 개발관리 절차서 (hwp, 회사명 XXXX 견본) · 오른쪽: 비교 의견 (704 기준)</p>
 <nav>{nav}</nav>
@@ -454,7 +475,7 @@ page = f"""<!doctype html>
 <tbody>
 {''.join(r for _, _, r in rows)}
 </tbody></table>
-</div></body></html>
+</div>{cbar_js}</body></html>
 """
 open(out, "w", encoding="utf-8").write(page)
 print("sections", len(rows))
