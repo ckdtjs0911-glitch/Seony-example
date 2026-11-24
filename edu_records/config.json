@@ -1,0 +1,12 @@
+{
+  "calendar_id": "provision.ai.lab@gmail.com",
+  "calendar_name": "유로인사이트",
+  "keyword": "교육",
+  "template": "template/UIT-F601-03_개인교육훈련기록표_Rev.0.docx",
+  "employees": [
+    {"name": "이창선", "dept": "품질관리팀", "table_index": 0, "emails": ["changseony11@gmail.com"]},
+    {"name": "송채영", "dept": "개발팀", "table_index": 1, "emails": ["thdcodud103@gmail.com"]},
+    {"name": "유가은", "dept": "개발팀", "table_index": 2, "emails": []},
+    {"name": "김시영", "dept": "개발팀", "table_index": 3, "emails": []}
+  ]
+}

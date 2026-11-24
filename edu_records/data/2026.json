@@ -1,0 +1,31 @@
+{
+  "year": 2026,
+  "scanned_on": "2026-11-24",
+  "records": [
+    {
+      "event_id": "3og46ecqifsptosuoeum16r952",
+      "start": "2026-09-09",
+      "date_text": "2026.09.09",
+      "course": "의료기기 개발 전주기 이해",
+      "hours": "",
+      "institution": "서울바이오허브",
+      "note": "",
+      "creator": "thdcodud103@gmail.com",
+      "employee": "송채영",
+      "title": "[서울바이오허브] 의료기기 개발 전주기 이해"
+    },
+    {
+      "event_id": "4rg210bh3jqma51tnabrs4dr55",
+      "start": "2026-10-14",
+      "date_text": "2026.10.14",
+      "course": "의료기기 인허가 참여",
+      "hours": "",
+      "institution": "서울바이오허브",
+      "note": "",
+      "creator": "changseony11@gmail.com",
+      "employee": "이창선",
+      "title": "[서울바이오허브] 의료기기 인허가 참여"
+    }
+  ],
+  "unmatched": []
+}
